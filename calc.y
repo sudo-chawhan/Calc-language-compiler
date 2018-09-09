@@ -6,7 +6,7 @@ int yylex();
 #include <ctype.h>
 %}
 
-%union {int num; char id;}         /* Yacc definitions */
+%union {float num; char id;}         /* Yacc definitions */
 %start line
 %token print
 %token mulitply
@@ -23,8 +23,8 @@ int yylex();
 
 line    :
             exit_command ';'        {exit(EXIT_SUCCESS);}
-            | exp ';'               {printf("= %d\n", $1);}
-            | line exp ';'          {printf("= %d\n", $2);}
+            | exp ';'               {printf("= %f\n", $1);}
+            | line exp ';'          {printf("= %f\n", $2);}
             | line exit_command ';' {exit(EXIT_SUCCESS);}
         ;
 
@@ -37,7 +37,7 @@ exp         : number                                               {$$ = $1;}
             //| add '(' number ',' exp ')'           {$$ = $3 + $5;}
             | subtract '(' exp ',' exp ')'           {$$ = $3 - $5;}
             //| subtract '(' number ',' exp ')'           {$$ = $3 - $5;}
-            | modulus '(' exp ',' exp ')'           {$$ = $3 % $5;}
+            | modulus '(' exp ',' exp ')'           {$$ = (int)$3 % (int)$5;}
             //| modulus '(' number ',' exp ')'           {$$ = $3 % $5;}
             ;
 
