@@ -11,7 +11,7 @@ int yylex();
 "add"					{return add;}
 "sub"					{return subtract;}
 "mod"					{return modulus;}
-[-]?[0-9]+                 	{yylval.num = atoi(yytext); return number;}
+[-]?[0-9]+              {yylval.num = atoi(yytext); return number;}
 [ \t\n]                	;
 [(),;]           	   	{return yytext[0];}
 .                      	{ECHO; yyerror ("unexpected character");}

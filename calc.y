@@ -22,28 +22,29 @@ int yylex();
 /* descriptions of expected inputs     corresponding actions (in C) */
 
 line    :
-		exit_command ';'		{exit(EXIT_SUCCESS);}
-		| exp ';'			{printf("= %d\n", $1);}
-		| line exit_command ';'	{exit(EXIT_SUCCESS);}
+            exit_command ';'        {exit(EXIT_SUCCESS);}
+            | exp ';'               {printf("= %d\n", $1);}
+            | line exp ';'          {printf("= %d\n", $2);}
+            | line exit_command ';' {exit(EXIT_SUCCESS);}
         ;
 
-exp    	: number                 					 {$$ = $1;}
-       	| mulitply '(' exp ',' exp ')'           {$$ = $3 * $5;}
-       	//| mulitply '(' number ',' exp ')'           {$$ = $3 * $5;}
-       	| divide '(' exp ',' exp ')'           {$$ = $3 / $5;}
-       	//| divide '(' number ',' exp ')'           {$$ = $3 / $5;}
-       	| add '(' exp ',' exp ')'           {$$ = $3 + $5;}
-       	//| add '(' number ',' exp ')'           {$$ = $3 + $5;}
-       	| subtract '(' exp ',' exp ')'           {$$ = $3 - $5;}
-       	//| subtract '(' number ',' exp ')'           {$$ = $3 - $5;}
-       	| modulus '(' exp ',' exp ')'           {$$ = $3 % $5;}
-       	//| modulus '(' number ',' exp ')'           {$$ = $3 % $5;}
-       	;
+exp         : number                                               {$$ = $1;}
+            | mulitply '(' exp ',' exp ')'           {$$ = $3 * $5;}
+            //| mulitply '(' number ',' exp ')'           {$$ = $3 * $5;}
+            | divide '(' exp ',' exp ')'           {$$ = $3 / $5;}
+            //| divide '(' number ',' exp ')'           {$$ = $3 / $5;}
+            | add '(' exp ',' exp ')'           {$$ = $3 + $5;}
+            //| add '(' number ',' exp ')'           {$$ = $3 + $5;}
+            | subtract '(' exp ',' exp ')'           {$$ = $3 - $5;}
+            //| subtract '(' number ',' exp ')'           {$$ = $3 - $5;}
+            | modulus '(' exp ',' exp ')'           {$$ = $3 % $5;}
+            //| modulus '(' number ',' exp ')'           {$$ = $3 % $5;}
+            ;
 
 %%                     /* C code */
 
 int main (void) {
-	return yyparse ( );
+      return yyparse ( );
 }
 
 void yyerror (char *s) {fprintf (stderr, "%s\n", s);} 
